@@ -15,14 +15,14 @@ def usage():
     exit (0)
 
 
-def probb(a, p):
+def probability(a, p):
     res = 0
-    for t in range(10 * 100):
+    mult_of_min_and_max = 10 * 100
+    for t in range(mult_of_min_and_max):
         res = res + proba(a, t / 100)
         if res >= p:
             rst = t / 100
             return rst
-    raise ValueError
 
 
 def perba(a, t):
@@ -60,8 +60,8 @@ def display_std_deviation(d):
 
 def display_percent(d, a):
     display_std_deviation(d)
-    print("Time after which 50%% of the ducks are back: %dm %02ds" % divmod(probb(a, 50) * 60, 60))
-    print("Time after which 99%% of the ducks are back: %dm %02ds" % divmod(probb(a, 99) * 60, 60))
+    print("Time after which 50%% of the ducks are back: %dm %02ds" % divmod(probability(a, 50) * 60, 60))
+    print("Time after which 99%% of the ducks are back: %dm %02ds" % divmod(probability(a, 99) * 60, 60))
     print("Percentage of ducks back after 1 minute: %.1f%%" % (perba(a, 1) - 0.2))
     print("Percentage of ducks back after 2 minutes: %.1f%%" % perba(a, 2))
 
