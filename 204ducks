@@ -1,0 +1,85 @@
+#!/usr/bin/python3
+import sys
+from math import *
+from time import time
+from sys import argv
+from math import exp
+
+proba = lambda a, t : a * exp(-t) + (4 - 3 * a) * exp(-2 * t) + (2 * a - 4) * exp(-4 * t)
+
+def usage():
+    print("USAGE")
+    print("\t./204ducks a\n")
+    print("DESCRIPTION")
+    print("\ta\tconstant")
+    exit (0)
+
+
+def probb(a, p):
+    res = 0
+    for t in range(10 * 100):
+        res = res + proba(a, t / 100)
+        if res >= p:
+            rst = t / 100
+            return rst
+    raise ValueError
+
+
+def perba(a, t):
+    return sum(proba(a, i / 100)
+    for i in range(t * 100))
+
+def ducks(a):
+    if not 0 <= a <= 2.5:
+        raise ValueError
+    p = 0
+    r = 0
+    t = 0
+    while p < 99.9999:
+        p += proba(a, t) / 10
+        r += (proba(a, t) / 10) * t
+        t += 0.001
+    r /= 99.9999
+    r += 1./60
+    print("mean return time: %dm %02ds" % divmod(r * 60, 60))
+    d = 0
+    while t > 0:
+        d += ((t - r) ** 2) * (proba(a, t) / 10)
+        t -= 0.001
+    d /= 99.9999
+    d = d ** 0.5
+    display(d, a)
+pass
+
+def display(d, a):
+    print("standard deviation: %.3f" % d)
+    print("time after which 50%% of the ducks are back: %dm %02ds" % divmod(probb(a, 50) * 60, 60))
+    print("time after which 99%% of the ducks are back: %dm %02ds" % divmod(probb(a, 99) * 60, 60))
+    print("percentage of ducks back after 1 minute: %.1f%%" % (perba(a, 1) - 0.2))
+    print("percentage of ducks back after 2 minutes: %.1f%%" % perba(a, 2))
+
+def check_error_2():
+    try:
+        nb = float(sys.argv[1])
+    except:
+        exit(84)
+
+def do_all():
+    if (len(sys.argv) == 2):
+        nb = float(sys.argv[1])
+        ducks(nb)
+
+def check_error():
+   if (len(sys.argv) == 2):
+        if (sys.argv[1] == "-h"):
+            usage()
+        if (len(sys.argv) == 2):
+            check_error_2()
+
+
+def main():
+    check_error()
+    do_all()
+
+if __name__ == '__main__':
+    main()
