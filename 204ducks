@@ -30,33 +30,40 @@ def perba(a, t):
     for i in range(t * 100))
 
 def ducks(a):
-    if not 0 <= a <= 2.5:
-        raise ValueError
+    max_value = 99.9999
+    min = 10
     p = 0
     r = 0
     t = 0
-    while p < 99.9999:
-        p += proba(a, t) / 10
-        r += (proba(a, t) / 10) * t
+
+    while p < max_value:
+        p += proba(a, t) / min
+        r += (proba(a, t) / min) * t
         t += 0.001
-    r /= 99.9999
-    r += 1./60
-    print("mean return time: %dm %02ds" % divmod(r * 60, 60))
+    r = r / max_value
+    r = r + 1./60
+    display_av_time(r)
     d = 0
     while t > 0:
         d += ((t - r) ** 2) * (proba(a, t) / 10)
         t -= 0.001
     d /= 99.9999
     d = d ** 0.5
-    display(d, a)
+    display_percent(d, a)
 pass
 
-def display(d, a):
-    print("standard deviation: %.3f" % d)
-    print("time after which 50%% of the ducks are back: %dm %02ds" % divmod(probb(a, 50) * 60, 60))
-    print("time after which 99%% of the ducks are back: %dm %02ds" % divmod(probb(a, 99) * 60, 60))
-    print("percentage of ducks back after 1 minute: %.1f%%" % (perba(a, 1) - 0.2))
-    print("percentage of ducks back after 2 minutes: %.1f%%" % perba(a, 2))
+def display_av_time(r):
+    print("Average return time: %dm %02ds" % divmod(r * 60, 60))
+
+def display_std_deviation(d):
+    print("Standard deviation: %.3f" % d)
+
+def display_percent(d, a):
+    display_std_deviation(d)
+    print("Time after which 50%% of the ducks are back: %dm %02ds" % divmod(probb(a, 50) * 60, 60))
+    print("Time after which 99%% of the ducks are back: %dm %02ds" % divmod(probb(a, 99) * 60, 60))
+    print("Percentage of ducks back after 1 minute: %.1f%%" % (perba(a, 1) - 0.2))
+    print("Percentage of ducks back after 2 minutes: %.1f%%" % perba(a, 2))
 
 def check_error_2():
     try:
