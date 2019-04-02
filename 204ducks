@@ -70,23 +70,25 @@ def check_error_2():
         nb = float(sys.argv[1])
     except:
         exit(84)
+    if (nb < 0 or nb > 2.5):
+        exit(84)
 
 def do_all():
     if (len(sys.argv) == 2):
         nb = float(sys.argv[1])
         ducks(nb)
 
+
 def check_error():
     if (len(sys.argv) == 2):
         if (sys.argv[1] == "-h"):
             usage()
-        if (len(sys.argv) == 2):
-            check_error_2()
-    if ((float)(sys.argv[1]) < 0 and (float)(sys.argv[1]) > 2.5):
-            exit (84)
+    check_error_2()
 
 
 def main():
+    if (len(sys.argv) != 2):
+        exit(84)
     check_error()
     do_all()
 
