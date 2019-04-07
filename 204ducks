@@ -1,11 +1,17 @@
 #!/usr/bin/python3
-import sys
+import sys, math
 from math import *
 from time import time
 from sys import argv
 from math import exp
 
 proba = lambda a, t : a * exp(-t) + (4 - 3 * a) * exp(-2 * t) + (2 * a - 4) * exp(-4 * t)
+
+def the_proba(a, t):
+    this_calc = (4 - 3 * a)
+    timer = 2 * a - 4
+    return ((-a * math.exp(-t) - this_calc / 2 * math.exp(-2 * t) - timer / 4 * math.exp(-4 * t)))
+
 
 def usage():
     print("USAGE")
@@ -62,8 +68,8 @@ def display_percent(d, a):
     display_std_deviation(d)
     print("Time after which 50%% of the ducks are back: %dm %02ds" % divmod(probability(a, 50) * 60, 60))
     print("Time after which 99%% of the ducks are back: %dm %02ds" % divmod(probability(a, 99) * 60, 60))
-    print("Percentage of ducks back after 1 minute: %.1f%%" % (perba(a, 1) - 0.2))
-    print("Percentage of ducks back after 2 minutes: %.1f%%" % perba(a, 2))
+    print("Percentage of ducks back after 1 minute: {0:.1f}%".format((the_proba(float(sys.argv[1]), 1) - the_proba(float(sys.argv[1]), 0)) * 100))
+    print("Percentage of ducks back after 2 minutes: {0:.1f}%".format((the_proba(float(sys.argv[1]), 2) - the_proba(float(sys.argv[1]), 0)) * 100))
 
 def check_error_2():
     try:
